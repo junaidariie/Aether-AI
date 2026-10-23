@@ -203,7 +203,7 @@ export default function App() {
               onRegenerate={(id) => chat.regenerate(active, id)}
               onSpeak={(id, text) => tts.speak(id, text)}
             />
-            <div className="dock">{composer('dock')}</div>
+            <div className="chat-dock">{composer('dock')}</div>
           </>
         ) : (
           <div className="welcome-stage">

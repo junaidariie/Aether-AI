@@ -1,4 +1,4 @@
-import { Volume2, Loader2 } from 'lucide-react';
+import { Volume2, Square, Loader2 } from 'lucide-react';
 
 export default function AudioControls({ messageId, tts, onSpeak }) {
   const loading = tts.loadingId === messageId;
@@ -13,7 +13,11 @@ export default function AudioControls({ messageId, tts, onSpeak }) {
       title={loading ? 'Stop audio generation' : playing ? 'Stop reading aloud' : 'Read aloud'}
       aria-pressed={playing}
     >
-      {loading ? <Loader2 size={17} className="spin" /> : <Volume2 size={17} aria-hidden="true" />}
+      {loading
+        ? <Loader2 size={17} className="spin" />
+        : playing
+          ? <Square size={15} fill="currentColor" aria-hidden="true" />
+          : <Volume2 size={17} aria-hidden="true" />}
     </button>
   );
 }

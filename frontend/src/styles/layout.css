@@ -12,7 +12,7 @@
 
 .chat-scroll { flex: 1; overflow-y: auto; padding: var(--s4) var(--s5) var(--s5); }
 .chat-column { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--s5); }
-.dock { padding: 0 var(--s5) var(--s4); }
+.chat-dock { padding: 0 var(--s5) var(--s4); }
 
 .welcome-stage { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .welcome-scroll { flex: 1; min-height: 0; overflow-y: auto; display: flex; padding: var(--s5); }
@@ -42,6 +42,7 @@
 .composer-tools { display: flex; justify-content: space-between; align-items: center; margin-top: var(--s2); }
 .composer-right, .composer-left { display: flex; align-items: center; gap: var(--s2); }
 .composer-notes { min-height: 20px; padding: 4px var(--s4) 0; display: flex; gap: var(--s3); }
+.composer-notes:empty { display: none; }
 .recording { display: flex; align-items: center; gap: var(--s3); padding: var(--s2) 0; color: var(--danger); font-weight: 500; }
 .rec-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--danger); animation: pulse 1.2s infinite; }
 

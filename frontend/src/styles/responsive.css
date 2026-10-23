@@ -14,9 +14,9 @@
   .header-new-chat { min-width: 44px; min-height: 44px; padding: 0 12px; }
   .banner { margin-inline: var(--s3); }
   .chat-scroll { padding: var(--s3); }
-  .dock { padding: 0 var(--s3) calc(var(--s2) + env(safe-area-inset-bottom, 0px)); }
+  .chat-dock { padding: 0 var(--s3) max(6px, env(safe-area-inset-bottom, 0px)); }
   .welcome-scroll { padding: var(--s3); }
-  .welcome-dock { padding: 0 var(--s3) calc(var(--s2) + env(safe-area-inset-bottom, 0px)); }
+  .welcome-dock { padding: 0 var(--s3) calc(6px + env(safe-area-inset-bottom, 0px)); }
   .welcome-dock .composer { border-radius: 24px; padding: 12px 14px 8px; }
   .welcome-mark { width: 58px; height: 58px; border-radius: 20px; }
   .suggestions { grid-template-columns: 1fr; }
