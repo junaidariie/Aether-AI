@@ -1,0 +1,89 @@
+# =========================================================
+# Core Orchestration & LLM
+# =========================================================
+langchain>=1.0,<2.0
+langgraph>=1.0,<2.0
+langchain-core
+langchain-community>=0.4
+langchain-groq>=0.3
+langchain-tavily>=0.2
+langgraph-supervisor
+
+# =========================================================
+# Environment & Configuration
+# =========================================================
+python-dotenv>=1.0
+pydantic>=2.7
+pypdf
+# =========================================================
+# Web Search, Crawling & Content Extraction
+# =========================================================
+ddgs>=9.0
+tavily-python
+requests>=2.32
+beautifulsoup4
+feedparser>=6.0
+
+# =========================================================
+# Document Processing
+# =========================================================
+pymupdf>=1.24
+Pillow>=10.0
+
+# =========================================================
+# OCR (Requires System Tesseract Installation)
+# =========================================================
+pytesseract>=0.3.13
+
+# =========================================================
+# Retrieval Augmented Generation (RAG)
+# =========================================================
+rank-bm25>=0.2.2
+scikit-learn>=1.5
+
+# Vector Database
+pinecone
+langchain-pinecone
+
+# Embeddings
+langchain-huggingface
+sentence-transformers
+
+# =========================================================
+# Routing / Multi-Agent Framework
+# =========================================================
+laya
+
+# =========================================================
+# API & Backend Services
+# =========================================================
+fastapi
+uvicorn
+python-multipart
+websockets
+
+# =========================================================
+# Persistence & Checkpointing
+# =========================================================
+langgraph-checkpoint-sqlite
+aiosqlite
+
+# =========================================================
+# Speech-to-Text (STT)
+# =========================================================
+faster-whisper
+ctranslate2
+
+# =========================================================
+# Text-to-Speech (TTS)
+# =========================================================
+edge-tts
+ffmpeg-python
+
+# =========================================================
+# Audio Recording & Processing
+# =========================================================
+sounddevice
+soundfile
+scipy
+numpy
