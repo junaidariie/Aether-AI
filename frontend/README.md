@@ -16,8 +16,11 @@ npm install
 ```bash
 cp .env.example .env
 ```
-`VITE_API_BASE_URL` (default `http://127.0.0.1:8000`) is read once in `src/services/api.js`; every request uses it.
-The backend's CORS list only allows `http://localhost:5173` and `http://127.0.0.1:5173`, so the dev server is pinned to port 5173 (`strictPort`). If you change the port or host, add the new origin to the backend's CORS list yourself.
+`VITE_API_BASE_URL` is read in `src/services/api.js`; all backend requests use it. Set it to your backend's public base URL (no trailing slash). For local backend development, put `VITE_API_BASE_URL=http://127.0.0.1:8000` in `.env.local`.
+
+For Vercel, add `VITE_API_BASE_URL` in **Project Settings → Environment Variables** for the deployment environments you use, then redeploy. For a local production build, set it in `.env.production`. Vite embeds this value into the frontend at build time, so it must be a public URL and must not contain secrets.
+
+The backend's CORS list must allow the frontend origin. The local backend configuration allows `http://localhost:5173` and `http://127.0.0.1:5173`, so the dev server is pinned to port 5173 (`strictPort`). Add your deployed frontend origin to the backend's CORS list when you host the frontend.
 
 ## 4. Start the frontend
 ```bash

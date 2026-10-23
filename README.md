@@ -148,7 +148,7 @@ cd frontend
 npm install
 ```
 
-Copy `.env.example` to `.env` in the `frontend/` directory if you need to change the API URL. By default, it uses `http://127.0.0.1:8000`.
+Copy `.env.example` to `.env` in the `frontend/` directory if you need to change the API URL. It points to the hosted backend at `https://junaid17-synapseai.hf.space`; for a local backend, change it to `http://127.0.0.1:8000`.
 
 Start the development server:
 
@@ -218,13 +218,13 @@ Do not commit `.env` files or API keys. `.dockerignore` excludes local environme
 
 ## Connect a deployed frontend
 
-Build the frontend with the backend URL configured as `VITE_API_BASE_URL`:
+In Vercel, add `VITE_API_BASE_URL` under **Project Settings → Environment Variables** for each environment you deploy (Production, Preview, and/or Development). Set its value to the public base URL of your backend, with no trailing slash:
 
 ```text
-VITE_API_BASE_URL=https://your-backend-space-url
+VITE_API_BASE_URL=https://your-backend-url
 ```
 
-Vite embeds `VITE_` variables into the client bundle at build time, so this value is a public API URL, not a place for secrets. Rebuild and redeploy the frontend after changing it. Also add the frontend's exact origin to the CORS allowlist in `app.py`.
+For a local production build, put the same setting in `frontend/.env.production`. Vite embeds `VITE_` variables into the client bundle at build time, so this value is a public API URL, not a place for secrets. Redeploy the frontend after changing it. Also add the frontend's exact origin to the backend CORS allowlist in `app.py`.
 
 ### Live demo
 
