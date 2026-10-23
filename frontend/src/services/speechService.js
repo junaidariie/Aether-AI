@@ -1,5 +1,5 @@
 import { ENDPOINTS, request, getJSON } from './api';
-import { speedToRate } from '../utils/formatters';
+import { speedToRate, volumeToRate } from '../utils/formatters';
 
 /**
  * STT contract (backend/stt_service/router.py):
@@ -30,11 +30,11 @@ export async function transcribeAudio(blob, { translation = false, signal } = {}
  *   POST /tts  JSON {text, voice, rate: "+0%", volume: "+0%"} -> audio/mpeg
  *   GET  /tts/available_voices -> { "Available Voices": n, Voices: [{Voice, Gender}] }
  */
-export async function synthesizeSpeech(text, { voice, speed = 1, signal } = {}) {
+export async function synthesizeSpeech(text, { voice, speed = 1, volume = 1, signal } = {}) {
   const res = await request(ENDPOINTS.tts, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, voice, rate: speedToRate(speed), volume: '+0%' }),
+    body: JSON.stringify({ text, voice, rate: speedToRate(speed), volume: volumeToRate(volume) }),
     signal,
   });
   const blob = await res.blob();

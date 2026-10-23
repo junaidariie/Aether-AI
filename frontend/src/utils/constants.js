@@ -11,6 +11,7 @@ export const DEFAULT_SETTINGS = {
   enterToSend: true,
   voice: 'en-GB-SoniaNeural', // default voice defined by backend/tts_service/router.py
   speed: 1,
+  volume: 1,
   autoRead: false,
   translateSpeech: false, // STT ?translation=true (Whisper translates to English)
   saveLocally: true,
@@ -33,7 +34,7 @@ export const AGENT_LABELS = {
 
 // Known tools -> friendly label + category. Unknown tools fall back gracefully.
 export const TOOL_META = {
-  web_search_tavily: { label: 'Web Search (Tavily)', category: 'web' },
+  web_search_tavily: { label: 'Tavily Search', category: 'web' },
   web_search_free: { label: 'Web Search (DuckDuckGo)', category: 'web' },
   wikipedia_search: { label: 'Wikipedia Search', category: 'web' },
   fetch_webpage: { label: 'Fetch Webpage', category: 'web' },

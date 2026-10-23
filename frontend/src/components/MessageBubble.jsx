@@ -1,12 +1,15 @@
-import { AlertTriangle, Languages, StopCircle } from 'lucide-react';
+import { useState } from 'react';
+import { AlertTriangle, CheckCircle2, Languages, Loader2, StopCircle, XCircle } from 'lucide-react';
 import logo from '../assets/logo.svg';
 import MarkdownContent from './MarkdownContent';
 import ActivityPanel from './ActivityPanel';
 import SourceCards from './SourceCards';
 import MessageActions from './MessageActions';
 import LoadingIndicator from './LoadingIndicator';
+import { agentLabel, toolMeta } from '../utils/formatters';
 
-export default function MessageBubble({ message, isStreaming, canRegenerate, tts, onRegenerate, onSpeak, onFeedback }) {
+export default function MessageBubble({ message, isStreaming, canRegenerate, tts, onRegenerate, onSpeak }) {
+  const [showProgress, setShowProgress] = useState(false);
   if (message.role === 'user') {
     return (
       <div className="msg user">
@@ -18,15 +21,44 @@ export default function MessageBubble({ message, isStreaming, canRegenerate, tts
     );
   }
 
-  const { activity, status } = message;
+  const { status } = message;
+  const activity = message.activity;
+  const timeline = activity?.timeline || [];
   const hasContent = !!message.content;
   const showEmpty = status === 'done' && !hasContent;
+  const activeTool = [...timeline].reverse().find((item) => item.kind === 'tool' && item.status === 'running');
+  const activeAgent = [...timeline].reverse().find((item) => item.kind === 'agent' && item.status === 'working');
+  const progressLabel = status === 'done'
+    ? 'Complete'
+    : status === 'error'
+      ? 'Could not complete'
+      : status === 'stopped'
+        ? 'Stopped'
+        : activeTool
+          ? toolMeta(activeTool.name).label
+          : activeAgent
+            ? agentLabel(activeAgent.name)
+            : activity?.phase === 'routing' || activity?.phase === 'preparing'
+              ? 'Laya'
+              : activity?.phase === 'supervisor'
+                ? 'Supervisor'
+                : activity?.phase === 'answering'
+                  ? 'Generating response'
+                  : activity?.phase === 'agent'
+                    ? 'Specialist agent'
+                    : 'Preparing response';
+  const ProgressIcon = status === 'done' ? CheckCircle2 : status === 'error' || status === 'stopped' ? XCircle : Loader2;
 
   return (
     <article className="msg assistant" aria-busy={isStreaming}>
       <img className="msg-avatar" src={logo} alt="" width="28" height="28" />
       <div className="msg-body">
-        {activity && <ActivityPanel activity={activity} streaming={isStreaming} status={status} />}
+        {activity && (
+          <div className={`live-progress ${status === 'done' ? 'complete' : status === 'error' || status === 'stopped' ? 'failed' : ''}`} role="status" aria-live="polite">
+            <ProgressIcon size={15} className={isStreaming ? 'spin' : ''} aria-hidden="true" />
+            <span key={progressLabel} className="live-progress-label">{progressLabel}</span>
+          </div>
+        )}
         {isStreaming && !hasContent && <LoadingIndicator phase={activity?.phase} />}
         {hasContent && <MarkdownContent>{message.content}</MarkdownContent>}
         {isStreaming && hasContent && <span className="cursor" aria-hidden="true" />}
@@ -43,7 +75,18 @@ export default function MessageBubble({ message, isStreaming, canRegenerate, tts
         )}
         {activity && <SourceCards timeline={activity.timeline} />}
         {!isStreaming && (
-          <MessageActions message={message} tts={tts} canRegenerate={canRegenerate} onRegenerate={onRegenerate} onSpeak={onSpeak} onFeedback={onFeedback} />
+          <>
+            <MessageActions
+              message={message}
+              tts={tts}
+              canRegenerate={canRegenerate}
+              onRegenerate={onRegenerate}
+              onSpeak={onSpeak}
+              showProgress={showProgress}
+              onToggleProgress={() => setShowProgress((visible) => !visible)}
+            />
+            {showProgress && activity && <ActivityPanel activity={activity} streaming={isStreaming} status={status} />}
+          </>
         )}
       </div>
     </article>

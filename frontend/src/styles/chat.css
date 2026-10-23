@@ -5,6 +5,10 @@
 .msg.assistant { align-items: flex-start; }
 .msg-avatar { flex-shrink: 0; margin-top: 2px; }
 .msg-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.live-progress { display: inline-flex; align-items: center; gap: 7px; width: fit-content; min-height: 22px; color: var(--accent); font-size: 0.8125rem; }
+.live-progress.complete { color: var(--ok); }
+.live-progress.failed { color: var(--text-2); }
+.live-progress-label { animation: welcome-enter 0.18s ease-out both; }
 
 .markdown { line-height: 1.7; overflow-wrap: anywhere; }
 .markdown > :first-child { margin-top: 0; }
@@ -56,10 +60,17 @@
 .error-box p { margin: 4px 0 0; color: var(--text-2); }
 .error-box svg { flex-shrink: 0; margin-top: 2px; }
 
-.message-actions { display: flex; align-items: center; gap: 2px; margin-left: -8px; }
-.action-btn { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: var(--text-2); }
+.message-actions { display: flex; flex-wrap: nowrap; align-items: center; gap: 2px; min-width: 0; margin-left: -8px; }
+.action-btn { width: 32px; height: 32px; min-width: 32px; min-height: 32px; flex: 0 0 32px; display: grid; place-items: center; border-radius: 50%; color: var(--text-2); }
 .action-btn:hover:not(:disabled) { background: var(--hover); color: var(--text); }
 .action-btn.active, .action-btn[aria-pressed='true'] { color: var(--accent); }
+.progress-toggle { display: inline-flex; align-items: center; gap: 5px; width: auto; flex: 0 0 auto; padding: 0 7px; border-radius: var(--r-pill); font-size: 0.72rem; white-space: nowrap; }
+.model-label { display: inline-flex; align-items: center; gap: 5px; flex: 1 1 auto; min-width: 0; overflow: hidden; color: var(--text-2); font-size: 0.72rem; white-space: nowrap; text-overflow: ellipsis; }
+.model-label svg { flex: 0 0 auto; }
+.audio-toggle.playing { color: var(--accent); background: var(--active); }
+.audio-toggle.playing svg { animation: audio-pulse 0.8s ease-in-out infinite alternate; }
+.audio-toggle.loading { color: var(--accent); }
+@keyframes audio-pulse { from { transform: scale(0.9); opacity: 0.65; } to { transform: scale(1.1); opacity: 1; } }
 
 .loading-indicator { display: flex; align-items: center; gap: var(--s3); color: var(--text-2); font-size: 0.9375rem; }
 .loading-dots { display: inline-flex; gap: 4px; }

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ArrowUp, Mic, Square, Loader2, X, Plus } from 'lucide-react';
+import { ArrowUp, Mic, Loader2, X, Plus } from 'lucide-react';
 import { MAX_MESSAGE_LENGTH } from '../utils/constants';
 import { formatDuration } from '../utils/formatters';
 import KnowledgeBaseTray from './KnowledgeBaseTray';
@@ -80,11 +80,11 @@ export default function ChatInput({ value, onChange, onSubmit, onStop, streaming
           </div>
           <div className="composer-right">
             {recording ? (
-              <button type="button" className="round-btn danger" onClick={stt.stop} aria-label="Stop recording and transcribe"><Square size={16} /></button>
+              <button type="button" className="icon-btn mic-btn mic-recording" onClick={stt.stop} aria-label="Stop recording and transcribe" title="Stop recording and transcribe"><Mic size={20} /></button>
             ) : transcribing ? (
               <button type="button" className="round-btn" disabled aria-label="Transcribing"><Loader2 size={18} className="spin" /></button>
             ) : (
-              <button type="button" className="icon-btn" onClick={stt.start} disabled={streaming} aria-label="Start voice input" title={stt.supported ? 'Dictate' : 'Voice input is not supported in this browser'}><Mic size={20} /></button>
+              <button type="button" className="icon-btn mic-btn" onClick={stt.start} disabled={streaming} aria-label="Start voice input" title={stt.supported ? 'Dictate' : 'Voice input is not supported in this browser'}><Mic size={20} /></button>
             )}
             {streaming ? (
               <button type="button" className="round-btn" onClick={onStop} aria-label="Stop generating"><Square size={16} /></button>

@@ -32,8 +32,8 @@
 .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gradient); color: #0b0b0c; display: grid; place-items: center; font-weight: 600; flex-shrink: 0; }
 .profile-menu { bottom: calc(100% + 8px); left: 0; min-width: 240px; }
 .profile-menu-name { padding: 8px 12px; font-weight: 500; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
-.sidebar-location { display: flex; align-items: center; gap: 6px; min-width: 0; padding: 0 8px 0 48px; color: var(--text-2); font-size: 0.75rem; line-height: 1.4; }
-.sidebar-location span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar-location { display: flex; align-items: flex-start; gap: 6px; min-width: 0; padding: 0 8px 0 48px; color: var(--text-2); font-size: 0.75rem; line-height: 1.4; }
+.sidebar-location span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .sidebar-location svg { flex: 0 0 auto; }
 .sidebar.collapsed .profile-wrap { flex: 0 0 auto; }
 

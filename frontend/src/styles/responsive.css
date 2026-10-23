@@ -14,9 +14,9 @@
   .header-new-chat { min-width: 44px; min-height: 44px; padding: 0 12px; }
   .banner { margin-inline: var(--s3); }
   .chat-scroll { padding: var(--s3); }
-  .dock { padding: 0 var(--s3) calc(var(--s3) + env(safe-area-inset-bottom, 0px)); }
+  .dock { padding: 0 var(--s3) calc(var(--s2) + env(safe-area-inset-bottom, 0px)); }
   .welcome-scroll { padding: var(--s3); }
-  .welcome-dock { padding: 0 var(--s3) calc(var(--s3) + env(safe-area-inset-bottom, 0px)); }
+  .welcome-dock { padding: 0 var(--s3) calc(var(--s2) + env(safe-area-inset-bottom, 0px)); }
   .welcome-dock .composer { border-radius: 24px; padding: 12px 14px 8px; }
   .welcome-mark { width: 58px; height: 58px; border-radius: 20px; }
   .suggestions { grid-template-columns: 1fr; }
@@ -26,6 +26,8 @@
   .msg.assistant { gap: var(--s2); }
   .msg-avatar { width: 24px; height: 24px; }
   .icon-btn, .action-btn, .round-btn { min-width: 44px; min-height: 44px; }
+  .message-actions .action-btn { width: 32px; height: 32px; min-width: 32px; min-height: 32px; flex-basis: 32px; }
+  .message-actions .progress-toggle { width: auto; flex-basis: auto; padding-inline: 6px; }
   .conv-more { opacity: 1; }
   .modal { border-radius: 24px; padding: var(--s4); }
   .settings-layout { grid-template-columns: 1fr; gap: var(--s3); }

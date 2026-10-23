@@ -147,6 +147,11 @@ export default function SettingsModal({ settings, onChange, profileName, onRenam
                     {SPEED_OPTIONS.map((s) => <option key={s} value={s}>{s}x</option>)}
                   </select>
                 </div>
+                <div className="setting-col">
+                  <label htmlFor="s-volume">Speech volume <output htmlFor="s-volume">{Math.round((settings.volume ?? 1) * 100)}%</output></label>
+                  <input id="s-volume" className="range-field" type="range" min="0" max="2" step="0.1" value={settings.volume ?? 1} onChange={(e) => onChange({ volume: Number(e.target.value) })} />
+                  <p className="muted small">100% is the default. Adjust from silent to 200%.</p>
+                </div>
                 <Toggle id="s-auto" label="Read answers aloud automatically" checked={settings.autoRead} onChange={(v) => onChange({ autoRead: v })} />
               </section>
             )}

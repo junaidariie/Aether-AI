@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, Activity, Loader2, CheckCircle2, XCircle, Info, Sparkles } from 'lucide-react';
 import RoutingDetails from './RoutingDetails';
 import AgentActivity from './AgentActivity';
@@ -6,9 +6,7 @@ import ToolActivity from './ToolActivity';
 import { agentLabel, toolMeta } from '../utils/formatters';
 
 export default function ActivityPanel({ activity, streaming, status }) {
-  const [open, setOpen] = useState(streaming);
-  const touched = useRef(false);
-  useEffect(() => { if (!touched.current) setOpen(streaming); }, [streaming]);
+  const [open, setOpen] = useState(true);
 
   const failed = status === 'error';
   const stopped = status === 'stopped';
@@ -59,14 +57,14 @@ export default function ActivityPanel({ activity, streaming, status }) {
   const statusText = streaming ? 'In progress' : failed ? 'Needs attention' : stopped ? 'Stopped' : 'Complete';
 
   return (
-    <section className="activity" aria-label="Thinking and activity">
+    <section className="activity" aria-label="Progress details">
       <div className={`activity-overview ${failed ? 'failed' : stopped ? 'stopped' : ''}`}>
-        <button className="activity-head" aria-expanded={open} onClick={() => { touched.current = true; setOpen((v) => !v); }}>
+        <button className="activity-head" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
           <span className={`activity-icon ${streaming ? 'working' : failed ? 'failed' : 'complete'}`}>
             {streaming ? <Loader2 size={17} className="spin" aria-hidden="true" /> : failed ? <XCircle size={17} aria-hidden="true" /> : <Activity size={17} aria-hidden="true" />}
           </span>
           <span className="activity-heading">
-            <span className="activity-title">Thinking &amp; activity</span>
+            <span className="activity-title">Progress details</span>
             <span className="activity-current">{phaseText}</span>
           </span>
           <span className={`activity-badge ${streaming ? 'working' : failed ? 'failed' : stopped ? 'stopped' : 'complete'}`}>

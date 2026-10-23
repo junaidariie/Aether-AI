@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { synthesizeSpeech } from '../services/speechService';
 import { stripMarkdown } from '../utils/formatters';
 
-export function useTextToSpeech({ voice, speed }) {
+export function useTextToSpeech({ voice, speed, volume }) {
   const [state, setState] = useState({ loadingId: null, playingId: null, paused: false, error: '' });
   const audioRef = useRef(null);
   const urlRef = useRef(null);
@@ -40,7 +40,7 @@ export function useTextToSpeech({ voice, speed }) {
     abortRef.current = controller;
     setState({ loadingId: id, playingId: null, paused: false, error: '' });
     try {
-      const blob = await synthesizeSpeech(text, { voice, speed, signal: controller.signal });
+      const blob = await synthesizeSpeech(text, { voice, speed, volume, signal: controller.signal });
       if (controller.signal.aborted) return;
       const url = URL.createObjectURL(blob);
       urlRef.current = url;
@@ -61,7 +61,7 @@ export function useTextToSpeech({ voice, speed }) {
       release();
       setState({ loadingId: null, playingId: null, paused: false, error: err?.message || 'Speech generation failed. You can continue reading the response.' });
     }
-  }, [release, stop, voice, speed]);
+  }, [release, stop, voice, speed, volume]);
 
   const pause = useCallback(() => {
     audioRef.current?.pause();

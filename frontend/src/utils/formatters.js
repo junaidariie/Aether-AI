@@ -79,3 +79,8 @@ export function speedToRate(speed) {
   const pct = Math.round((Number(speed) - 1) * 100);
   return `${pct >= 0 ? '+' : ''}${pct}%`; // edge-tts format, e.g. "+25%"
 }
+
+export function volumeToRate(volume) {
+  const pct = Math.round((Number(volume) - 1) * 100);
+  return `${pct >= 0 ? '+' : ''}${pct}%`;
+}

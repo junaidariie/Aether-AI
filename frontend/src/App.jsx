@@ -37,7 +37,7 @@ export default function App() {
   const settingsRef = useRef(settings);
   useEffect(() => { activeRef.current = active; settingsRef.current = settings; });
 
-  const tts = useTextToSpeech({ voice: settings.voice, speed: settings.speed });
+  const tts = useTextToSpeech({ voice: settings.voice, speed: settings.speed, volume: settings.volume });
   const chat = useChat({
     history,
     profileName: profile.name,
@@ -202,7 +202,6 @@ export default function App() {
               conversationId={active.id} messages={messages} streamingMessageId={streamingId} tts={tts}
               onRegenerate={(id) => chat.regenerate(active, id)}
               onSpeak={(id, text) => tts.speak(id, text)}
-              onFeedback={(id, v) => history.updateMessage(active.id, id, (m) => ({ ...m, feedback: v }))}
             />
             <div className="dock">{composer('dock')}</div>
           </>

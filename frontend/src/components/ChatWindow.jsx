@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import MessageBubble from './MessageBubble';
 
-export default function ChatWindow({ conversationId, messages, streamingMessageId, tts, onRegenerate, onSpeak, onFeedback }) {
+export default function ChatWindow({ conversationId, messages, streamingMessageId, tts, onRegenerate, onSpeak }) {
   const scroller = useRef(null);
   const stick = useRef(true);
 
@@ -29,7 +29,6 @@ export default function ChatWindow({ conversationId, messages, streamingMessageI
             tts={tts}
             onRegenerate={() => onRegenerate(m.id)}
             onSpeak={() => onSpeak(m.id, m.content)}
-            onFeedback={(v) => onFeedback(m.id, v)}
           />
         ))}
       </div>

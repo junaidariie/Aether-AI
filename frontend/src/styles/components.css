@@ -1,5 +1,10 @@
 .icon-btn { width: 40px; height: 40px; display: inline-grid; place-items: center; border-radius: 50%; color: var(--text-2); flex-shrink: 0; }
 .icon-btn:hover:not(:disabled) { background: var(--hover); color: var(--text); }
+.mic-btn { transition: color 0.18s, background 0.18s, transform 0.18s; }
+.mic-btn:hover:not(:disabled) { color: var(--accent); transform: scale(1.06); }
+.mic-recording { color: var(--danger); background: var(--danger-bg); animation: mic-pulse 1.2s ease-out infinite; }
+.mic-recording:hover:not(:disabled) { color: var(--danger); background: var(--danger-bg); }
+@keyframes mic-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 0%, transparent); } 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--danger) 20%, transparent); } }
 .round-btn { width: 40px; height: 40px; display: inline-grid; place-items: center; border-radius: 50%; background: var(--elevated); color: var(--text); }
 .round-btn.send { background: var(--accent); color: var(--accent-ink); }
 .round-btn.danger { background: var(--danger); color: #1b0b0a; }

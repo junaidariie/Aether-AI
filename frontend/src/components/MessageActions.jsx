@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Copy, Check, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { Copy, Check, RefreshCw, ListChecks, Cpu } from 'lucide-react';
 import AudioControls from './AudioControls';
 
-export default function MessageActions({ message, tts, canRegenerate, onRegenerate, onSpeak, onFeedback }) {
+export default function MessageActions({ message, tts, canRegenerate, onRegenerate, onSpeak, showProgress, onToggleProgress }) {
   const [copied, setCopied] = useState(false);
   const hasText = !!message.content;
+  const model = message.activity?.routing?.model;
 
   const copy = async () => {
     try {
@@ -24,13 +25,14 @@ export default function MessageActions({ message, tts, canRegenerate, onRegenera
       {canRegenerate && (
         <button className="action-btn" onClick={onRegenerate} aria-label="Regenerate response" title="Regenerate response"><RefreshCw size={16} /></button>
       )}
-      {hasText && <AudioControls messageId={message.id} tts={tts} onSpeak={onSpeak} />}
-      {hasText && (
-        <>
-          <button className={`action-btn ${message.feedback === 'up' ? 'active' : ''}`} aria-pressed={message.feedback === 'up'} aria-label="Good response" title="Good response (saved on this device only)" onClick={() => onFeedback(message.feedback === 'up' ? null : 'up')}><ThumbsUp size={16} /></button>
-          <button className={`action-btn ${message.feedback === 'down' ? 'active' : ''}`} aria-pressed={message.feedback === 'down'} aria-label="Bad response" title="Bad response (saved on this device only)" onClick={() => onFeedback(message.feedback === 'down' ? null : 'down')}><ThumbsDown size={16} /></button>
-        </>
+      {message.activity && (
+        <button className={`action-btn progress-toggle ${showProgress ? 'active' : ''}`} onClick={onToggleProgress} aria-expanded={showProgress} aria-label={showProgress ? 'Hide progress' : 'Show progress'} title={showProgress ? 'Hide progress' : 'Show progress'}>
+          <ListChecks size={16} />
+          <span>{showProgress ? 'Hide progress' : 'Show progress'}</span>
+        </button>
       )}
+      {model && <span className="model-label" title={`Model used: ${model}`}><Cpu size={14} aria-hidden="true" />{model}</span>}
+      {hasText && <AudioControls messageId={message.id} tts={tts} onSpeak={onSpeak} />}
     </div>
   );
 }
