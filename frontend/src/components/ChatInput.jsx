@@ -47,19 +47,6 @@ export default function ChatInput({ value, onChange, onSubmit, onStop, streaming
   return (
     <div className={`composer-wrap ${variant}`} ref={wrapperRef}>
       <form className="composer" onSubmit={(e) => { e.preventDefault(); if (canSend) onSubmit(); }}>
-        {recording ? (
-          <div className="recording" role="status" aria-live="polite">
-            <span className="rec-dot" aria-hidden="true" />
-            <span>Recording… {formatDuration(stt.seconds)}</span>
-          </div>
-        ) : (
-          <textarea
-            ref={inputRef} className="composer-input" rows={1} value={value}
-            onChange={(e) => onChange(e.target.value)} onKeyDown={onKeyDown}
-            placeholder={transcribing ? 'Transcribing your speech…' : 'Ask Aether AI'}
-            aria-label="Message" disabled={transcribing}
-          />
-        )}
         <div className="composer-tools">
           <div className="composer-left">
             {knowledgeBase && (
@@ -77,6 +64,21 @@ export default function ChatInput({ value, onChange, onSubmit, onStop, streaming
               </button>
             )}
             {recording && <button type="button" className="icon-btn" onClick={stt.cancel} aria-label="Cancel recording"><X size={20} /></button>}
+          </div>
+          <div className="composer-entry">
+            {recording ? (
+              <div className="recording" role="status" aria-live="polite">
+                <span className="rec-dot" aria-hidden="true" />
+                <span>Recording… {formatDuration(stt.seconds)}</span>
+              </div>
+            ) : (
+              <textarea
+                ref={inputRef} className="composer-input" rows={1} value={value}
+                onChange={(e) => onChange(e.target.value)} onKeyDown={onKeyDown}
+                placeholder={transcribing ? 'Transcribing your speech…' : 'Ask Aether AI'}
+                aria-label="Message" disabled={transcribing}
+              />
+            )}
           </div>
           <div className="composer-right">
             {recording ? (

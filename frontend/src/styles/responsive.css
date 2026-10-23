@@ -17,7 +17,12 @@
   .chat-dock { padding: 0 var(--s3) max(6px, env(safe-area-inset-bottom, 0px)); }
   .welcome-scroll { padding: var(--s3); }
   .welcome-dock { padding: 0 var(--s3) calc(6px + env(safe-area-inset-bottom, 0px)); }
-  .welcome-dock .composer { border-radius: 24px; padding: 12px 14px 8px; }
+  .composer { padding: 6px 8px; }
+  .composer-input { min-height: 40px; padding: 8px 0; line-height: 1.5; }
+  .composer-tools { gap: 4px; }
+  .composer-left, .composer-right { gap: 0; }
+  .composer .icon-btn, .composer .round-btn { width: 40px; height: 40px; min-width: 40px; min-height: 40px; }
+  .welcome-dock .composer { border-radius: 24px; padding: 6px 8px; }
   .welcome-mark { width: 58px; height: 58px; border-radius: 20px; }
   .suggestions { grid-template-columns: 1fr; }
   .suggestion { min-height: 64px; flex-direction: row; align-items: center; }
@@ -28,6 +33,7 @@
   .icon-btn, .action-btn, .round-btn { min-width: 44px; min-height: 44px; }
   .message-actions .action-btn { width: 32px; height: 32px; min-width: 32px; min-height: 32px; flex-basis: 32px; }
   .message-actions .progress-toggle { width: auto; flex-basis: auto; padding-inline: 6px; }
+  .model-reason { right: -34px; }
   .conv-more { opacity: 1; }
   .modal { border-radius: 24px; padding: var(--s4); }
   .settings-layout { grid-template-columns: 1fr; gap: var(--s3); }
