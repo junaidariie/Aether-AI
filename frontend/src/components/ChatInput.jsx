@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ArrowUp, Mic, Loader2, X, Plus } from 'lucide-react';
+import { ArrowUp, Mic, Square, Loader2, X, Plus } from 'lucide-react';
 import { MAX_MESSAGE_LENGTH } from '../utils/constants';
 import { formatDuration } from '../utils/formatters';
 import KnowledgeBaseTray from './KnowledgeBaseTray';
