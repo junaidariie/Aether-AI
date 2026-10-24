@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Plus, PanelLeftClose, PanelLeftOpen, MessageSquare, MoreVertical, Pencil, Trash2, Pin, PinOff, Settings, X, MapPin, Loader2 } from 'lucide-react';
+import { Plus, MessageSquare, MoreVertical, Pencil, Trash2, Pin, PinOff, Settings, X, MapPin, Loader2 } from 'lucide-react';
 import logo from '../assets/logo.svg';
 import ProfileMenu from './ProfileMenu';
 
@@ -50,7 +50,7 @@ function ConversationItem({ conv, active, onSelect, onRename, onDelete, onToggle
   );
 }
 
-export default function Sidebar({ conversations, activeId, collapsed, mobileOpen, profile, onNew, onSelect, onRename, onDelete, onTogglePin, onToggleCollapse, onCloseMobile, onOpenSettings, onRenameProfile, onClearHistory, onResetProfile }) {
+export default function Sidebar({ conversations, activeId, collapsed, mobileOpen, profile, onNew, onSelect, onRename, onDelete, onTogglePin, onCloseMobile, onOpenSettings, onRenameProfile, onClearHistory, onResetProfile }) {
   const [profileMenu, setProfileMenu] = useState(false);
   const [location, setLocation] = useState('');
   const [locationStatus, setLocationStatus] = useState('loading');
@@ -99,9 +99,6 @@ export default function Sidebar({ conversations, activeId, collapsed, mobileOpen
             <img src={logo} alt="" width="28" height="28" />
             {!collapsed && <span className="brand-name">Aether AI</span>}
           </div>
-          <button className="icon-btn desktop-only" onClick={onToggleCollapse} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
-            {collapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
-          </button>
           <button className="icon-btn mobile-only" onClick={onCloseMobile} aria-label="Close sidebar"><X size={20} /></button>
         </div>
 

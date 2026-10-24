@@ -72,7 +72,7 @@ export default function ActivityPanel({ activity, streaming, status }) {
           </span>
           <ChevronDown size={17} className={`activity-chevron ${open ? 'flip' : ''}`} aria-hidden="true" />
         </button>
-        <div className="activity-progress" aria-label={`Current stage: ${stage}`}>
+        <div className="activity-progress" role="group" aria-label={`Current stage: ${stage}`}>
           {stages.map((label, index) => {
             const optionalStage = (index === 2 && agentCount === 0) || (index === 3 && toolCount === 0);
             const complete = !optionalStage && (
@@ -88,7 +88,7 @@ export default function ActivityPanel({ activity, streaming, status }) {
             );
             const current = streaming && index === stageIndex;
             return (
-              <span key={label} className={`activity-step ${complete ? 'complete' : ''} ${current ? 'current' : ''} ${optionalStage ? 'optional' : ''} ${failed && index === stageIndex ? 'failed' : ''} ${stopped && index === stageIndex ? 'stopped' : ''}`}>
+              <span key={label} aria-current={current ? 'step' : undefined} className={`activity-step ${complete ? 'complete' : ''} ${current ? 'current' : ''} ${optionalStage ? 'optional' : ''} ${failed && index === stageIndex ? 'failed' : ''} ${stopped && index === stageIndex ? 'stopped' : ''}`}>
                 <span className="activity-step-dot">{complete ? <CheckCircle2 size={12} aria-hidden="true" /> : current ? <Sparkles size={11} aria-hidden="true" /> : null}</span>
                 <span className="activity-step-label">{label}</span>
               </span>
@@ -106,7 +106,7 @@ export default function ActivityPanel({ activity, streaming, status }) {
         <div className="activity-body">
           <div className="activity-section-heading"><span>Request progress</span>{streaming && <span className="activity-live"><i /> Live</span>}</div>
           <RoutingDetails routing={activity.routing} status={activity.routingStatus} />
-          {activity.timeline.some((t) => t.kind !== 'status') && <div className="activity-events">
+          {activity.timeline.length > 0 && <div className="activity-events">
             {activity.timeline.map((t, i) => {
               if (t.kind === 'status') return <div className="act-status-line" key={i}><Info size={14} aria-hidden="true" /> {t.text}</div>;
               if (t.kind === 'agent') return <AgentActivity key={`a${i}`} entry={t} />;

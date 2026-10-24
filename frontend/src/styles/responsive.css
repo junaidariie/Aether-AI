@@ -10,8 +10,16 @@
   .sidebar.open { transform: none; }
   .sidebar.collapsed .brand-name, .sidebar.collapsed .profile-name { display: inline; }
   .backdrop { display: block; position: fixed; inset: 0; z-index: 55; background: rgba(0, 0, 0, 0.5); }
-  .chat-header { padding: var(--s2) var(--s3); }
+  .chat-header { padding: var(--s2) var(--s3); gap: var(--s2); min-height: 58px; }
+  .chat-header-left { gap: var(--s2); }
+  .header-sidebar-toggle { display: inline-grid; width: 40px; height: 40px; }
+  .chat-title { font-size: 0.9rem; }
   .header-new-chat { min-width: 44px; min-height: 44px; padding: 0 12px; }
+  .model-info-trigger { min-height: 40px; padding-inline: 11px; }
+  .model-info-panel { width: min(620px, calc(100vw - 24px)); padding: 14px; }
+  .model-info-groups { gap: 8px; }
+  .model-info-group { padding: 10px; }
+  .model-info-group code { font-size: 0.68rem; }
   .banner { margin-inline: var(--s3); }
   .chat-scroll { padding: var(--s3); }
   .chat-dock { padding: 0 var(--s3) max(6px, env(safe-area-inset-bottom, 0px)); }
@@ -32,6 +40,7 @@
   .msg-avatar { width: 24px; height: 24px; }
   .icon-btn, .action-btn, .round-btn { min-width: 44px; min-height: 44px; }
   .message-actions .action-btn { width: 32px; height: 32px; min-width: 32px; min-height: 32px; flex-basis: 32px; }
+  .message-actions .audio-toggle.playing { width: auto; min-width: 44px; flex-basis: auto; }
   .message-actions .progress-toggle { width: auto; flex-basis: auto; padding-inline: 6px; }
   .model-reason { right: -34px; }
   .conv-more { opacity: 1; }
@@ -56,4 +65,27 @@
   .kb-tray-actions .kb-refresh { width: 40px; height: 40px; }
   .kb-item { gap: 8px; padding: 8px; }
   .kb-remove { width: 40px; height: 40px; }
+}
+
+@media (max-width: 430px) {
+  .chat-header { gap: 4px; }
+  .chat-header-left { gap: 2px; }
+  .header-sidebar-toggle { width: 36px; min-width: 36px; }
+  .chat-title { font-size: 0.82rem; }
+  .model-info-trigger { width: 40px; min-width: 40px; padding: 0; }
+  .model-info-trigger span { display: none; }
+  .header-new-chat { min-width: 40px; width: 40px; padding: 0; }
+  .header-new-chat span { display: none; }
+  .model-info-panel { position: fixed; top: 64px; left: 50%; right: auto; width: min(360px, calc(100vw - 20px)); transform: translateX(-50%); }
+  .model-info-groups { grid-template-columns: 1fr; max-height: min(55dvh, 430px); overflow-y: auto; }
+  .model-info-group ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mic-recording, .mic-recording::before, .mic-recording .voice-waveform i, .recording, .rec-dot,
+  .voice-waveform i, .audio-waveform i, .audio-toggle, .mic-btn, .round-btn, .round-btn.send svg,
+  .kb-trigger, .kb-plus-icon {
+    animation: none;
+    transition: none;
+  }
 }

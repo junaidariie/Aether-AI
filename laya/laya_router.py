@@ -1,15 +1,10 @@
+from agents_workflow.models import select_model
 from laya import Router
 
 
 print("Loading Laya router (one-time)...")
 router = Router(preload=True)
 print("Router ready.\n")
-
-
-MODELS = {
-    "simple": "openai/gpt-oss-20b",
-    "complex": "openai/gpt-oss-120b",
-}
 
 
 QUESTIONS = {
@@ -93,14 +88,14 @@ def route(user_message: str) -> dict:
     answer = result["answers"]["task_complexity"]
 
     task = str(answer["choice"]).strip().lower()
-    if task not in MODELS:
+    if task not in {"simple", "complex"}:
         raise ValueError(f"Unexpected Laya task classification: {answer['choice']!r}")
     confidence = round(float(answer["confidence"]), 3)
 
-    model = MODELS[task]
+    model = select_model(task)
 
     return {
-        "model": model,
+        "model": model.model_id,
         "task": task,
         "confidence": confidence,
     }

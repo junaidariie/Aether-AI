@@ -2,11 +2,11 @@ import os
 from functools import lru_cache
 
 from dotenv import load_dotenv
-from langchain_groq import ChatGroq
 from langgraph_supervisor import create_supervisor
 from langgraph.checkpoint.memory import MemorySaver
 
 from .agents import build_agents, profile_context_prompt
+from .models import create_chat_model
 
 load_dotenv()
 
@@ -147,7 +147,7 @@ def get_supervisor(
     knowledge_base_user_id: str = "",
 ):
     """Build/cache a graph whose supervisor and all agents use the selected model."""
-    model = ChatGroq(model=model_name, temperature=0)
+    model = create_chat_model(model_name, temperature=0)
     agents = build_agents(model, profile_name, knowledge_base_user_id)
 
     workflow = create_supervisor(

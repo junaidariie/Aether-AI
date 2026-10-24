@@ -1,14 +1,24 @@
 .icon-btn { width: 40px; height: 40px; display: inline-grid; place-items: center; border-radius: 50%; color: var(--text-2); flex-shrink: 0; }
 .icon-btn:hover:not(:disabled) { background: var(--hover); color: var(--text); }
-.mic-btn { transition: color 0.18s, background 0.18s, transform 0.18s; }
-.mic-btn:hover:not(:disabled) { color: var(--accent); transform: scale(1.06); }
-.mic-recording { color: var(--danger); background: var(--danger-bg); animation: mic-pulse 1.2s ease-out infinite; }
+.mic-btn { position: relative; transition: color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s; }
+.mic-btn:hover:not(:disabled) { color: var(--accent); background: var(--active); transform: translateY(-1px); }
+.mic-btn:active:not(:disabled) { transform: scale(0.94); }
+.mic-btn:focus-visible { outline-offset: 3px; }
+.mic-recording { color: var(--danger); background: var(--danger-bg); animation: mic-pulse 1.5s ease-out infinite; }
 .mic-recording:hover:not(:disabled) { color: var(--danger); background: var(--danger-bg); }
+.mic-recording::before { position: absolute; inset: 3px; border: 1px solid color-mix(in srgb, var(--danger) 36%, transparent); border-radius: 50%; content: ''; pointer-events: none; animation: mic-ring 1.5s ease-out infinite; }
+.mic-transcribing { color: var(--accent); background: var(--active); }
 @keyframes mic-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 0%, transparent); } 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--danger) 20%, transparent); } }
-.round-btn { width: 40px; height: 40px; display: inline-grid; place-items: center; border-radius: 50%; background: var(--elevated); color: var(--text); }
-.round-btn.send { background: var(--accent); color: var(--accent-ink); }
+@keyframes mic-ring { 0% { transform: scale(0.9); opacity: 0.65; } 100% { transform: scale(1.38); opacity: 0; } }
+.round-btn { width: 40px; height: 40px; display: inline-grid; place-items: center; border-radius: 50%; background: var(--elevated); color: var(--text); transition: color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease; }
+.round-btn:not(:disabled):hover { transform: translateY(-1px); }
+.round-btn:not(:disabled):active { transform: scale(0.94); }
+.round-btn.send { background: var(--accent); color: var(--accent-ink); box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 22%, transparent); }
+.round-btn.send:not(:disabled):hover { background: color-mix(in srgb, var(--accent) 88%, white); box-shadow: 0 5px 16px color-mix(in srgb, var(--accent) 36%, transparent); }
+.round-btn.send svg { transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.round-btn.send:not(:disabled):hover svg { transform: translateY(-2px); }
 .round-btn.danger { background: var(--danger); color: #1b0b0a; }
-.round-btn:disabled { opacity: 0.4; }
+.round-btn:disabled { opacity: 0.4; box-shadow: none; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 22px; border-radius: var(--r-pill); font-weight: 500; font-size: 0.9rem; min-height: 40px; }
 .btn-primary { background: var(--accent); color: var(--accent-ink); }

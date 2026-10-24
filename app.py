@@ -111,8 +111,19 @@ async def chat_stream(request: ChatRequest):
     async def generate() -> AsyncIterator[str]:
         try:
             routing = await _run_laya(request.message)
-            selected_model = routing["model"]
-            selected_task = routing["task"]
+        except Exception as exc:
+            yield sse_event(
+                "error",
+                {
+                    "message": f"Laya routing failed: {exc}",
+                    "hint": "Check that the Laya package is installed and its Router initializes correctly.",
+                },
+            )
+            return
+
+        selected_model = routing["model"]
+        selected_task = routing["task"]
+        try:
             selected_supervisor = get_supervisor(
                 selected_model,
                 request.profile_name.strip(),
@@ -123,8 +134,8 @@ async def chat_stream(request: ChatRequest):
             yield sse_event(
                 "error",
                 {
-                    "message": f"Laya routing failed: {exc}",
-                    "hint": "Check that the Laya package is installed and its Router initializes correctly.",
+                    "message": f"Model initialization failed: {exc}",
+                    "hint": "Check the selected provider's API key, model ID, and installed LangChain integration.",
                 },
             )
             return
@@ -260,7 +271,7 @@ async def chat_stream(request: ChatRequest):
                 "error",
                 {
                     "message": str(exc),
-                    "hint": "Check the Groq API key/model, tool API keys, imports, and package versions.",
+                    "hint": "Check the selected model provider's API key/model, tool API keys, imports, and package versions.",
                 },
             )
 

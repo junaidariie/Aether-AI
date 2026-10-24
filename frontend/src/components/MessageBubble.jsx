@@ -48,16 +48,41 @@ export default function MessageBubble({ message, isStreaming, canRegenerate, tts
                     ? 'Specialist agent'
                     : 'Preparing response';
   const ProgressIcon = status === 'done' ? CheckCircle2 : status === 'error' || status === 'stopped' ? XCircle : Loader2;
+  const liveEvents = timeline
+    .filter((item) => item.kind === 'status' || item.kind === 'agent' || item.kind === 'tool')
+    .slice(-4);
 
   return (
     <article className="msg assistant" aria-busy={isStreaming}>
       <img className="msg-avatar" src={logo} alt="" width="28" height="28" />
       <div className="msg-body">
         {activity && (
-          <div className={`live-progress ${status === 'done' ? 'complete' : status === 'error' || status === 'stopped' ? 'failed' : ''}`} role="status" aria-live="polite">
-            <ProgressIcon size={15} className={isStreaming ? 'spin' : ''} aria-hidden="true" />
-            <span key={progressLabel} className="live-progress-label">{progressLabel}</span>
-          </div>
+          <>
+            <div className={`live-progress ${status === 'done' ? 'complete' : status === 'error' || status === 'stopped' ? 'failed' : ''}`} role="status" aria-live="polite">
+              <ProgressIcon size={15} className={isStreaming ? 'spin' : ''} aria-hidden="true" />
+              <span key={progressLabel} className="live-progress-label">{progressLabel}</span>
+            </div>
+            {isStreaming && liveEvents.length > 0 && (
+              <ol className="live-activity-trail" aria-label="Recent request activity">
+                {liveEvents.map((item, index) => {
+                  const label = item.kind === 'status'
+                    ? item.text
+                    : item.kind === 'agent'
+                      ? agentLabel(item.name)
+                      : toolMeta(item.name).label;
+                  const complete = item.status === 'completed' || item.status === 'finished';
+                  const current = item.status === 'working' || item.status === 'running';
+                  return (
+                    <li className={complete ? 'complete' : current ? 'current' : ''} key={`${item.kind}-${item.name || item.text}-${index}`}>
+                      <span className="live-activity-dot" aria-hidden="true" />
+                      <span>{label}</span>
+                      {current && <span className="live-activity-state">Working</span>}
+                    </li>
+                  );
+                })}
+              </ol>
+            )}
+          </>
         )}
         {isStreaming && !hasContent && <LoadingIndicator phase={activity?.phase} />}
         {hasContent && <MarkdownContent>{message.content}</MarkdownContent>}

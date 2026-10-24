@@ -180,14 +180,21 @@ export default function App() {
       <Sidebar
         conversations={history.conversations} activeId={active?.id} collapsed={collapsed} mobileOpen={mobileOpen} profile={profile}
         onNew={handleNew} onSelect={handleSelect} onRename={history.rename} onDelete={requestDelete} onTogglePin={history.togglePin}
-        onToggleCollapse={() => setCollapsed((v) => !v)} onCloseMobile={() => setMobileOpen(false)}
+        onCloseMobile={() => setMobileOpen(false)}
         onOpenSettings={() => { setShowSettings(true); setMobileOpen(false); }}
         onRenameProfile={(name) => setProfile((p) => ({ ...p, name }))}
         onClearHistory={() => setConfirm({ kind: 'clear' })} onResetProfile={() => setConfirm({ kind: 'reset' })}
       />
 
       <main className="main">
-        <ChatHeader title={hasMessages ? active.title : ''} onOpenSidebar={() => setMobileOpen(true)} onNewChat={handleNew} />
+        <ChatHeader
+          title={hasMessages ? active.title : ''}
+          onOpenSidebar={() => {
+            if (window.matchMedia('(max-width: 760px)').matches) setMobileOpen(true);
+            else setCollapsed((value) => !value);
+          }}
+          onNewChat={handleNew}
+        />
         {online === false && (
           <div className="banner error" role="alert">Unable to connect to the backend. Check that the API server is running.</div>
         )}

@@ -4,19 +4,30 @@ export default function AudioControls({ messageId, tts, onSpeak }) {
   const loading = tts.loadingId === messageId;
   const playing = tts.playingId === messageId;
   const active = loading || playing;
+  const label = loading
+    ? 'Stop audio generation'
+    : playing
+      ? 'Stop reading aloud'
+      : 'Read response aloud';
 
   return (
     <button
       className={`action-btn audio-toggle ${playing ? 'playing' : ''} ${loading ? 'loading' : ''}`}
       onClick={active ? tts.stop : onSpeak}
-      aria-label={loading ? 'Stop audio generation' : playing ? 'Stop reading aloud' : 'Read aloud'}
-      title={loading ? 'Stop audio generation' : playing ? 'Stop reading aloud' : 'Read aloud'}
+      aria-label={label}
+      title={label}
       aria-pressed={playing}
+      aria-busy={loading}
     >
       {loading
-        ? <Loader2 size={17} className="spin" />
+        ? <Loader2 size={17} className="spin" aria-hidden="true" />
         : playing
-          ? <Square size={15} fill="currentColor" aria-hidden="true" />
+          ? (
+            <>
+              <Square size={14} fill="currentColor" aria-hidden="true" />
+              <span className="audio-waveform" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /></span>
+            </>
+          )
           : <Volume2 size={17} aria-hidden="true" />}
     </button>
   );

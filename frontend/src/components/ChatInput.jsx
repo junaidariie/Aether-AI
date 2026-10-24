@@ -59,7 +59,7 @@ export default function ChatInput({ value, onChange, onSubmit, onStop, streaming
                 title="Add or manage PDFs"
                 disabled={recording || transcribing}
               >
-                <Plus size={20} />
+                <Plus className="kb-plus-icon" size={20} aria-hidden="true" />
                 {knowledgeBase.documents.length > 0 && <span className="kb-count">{knowledgeBase.documents.length}</span>}
               </button>
             )}
@@ -69,7 +69,9 @@ export default function ChatInput({ value, onChange, onSubmit, onStop, streaming
             {recording ? (
               <div className="recording" role="status" aria-live="polite">
                 <span className="rec-dot" aria-hidden="true" />
-                <span>Recording… {formatDuration(stt.seconds)}</span>
+                <span>Recording</span>
+                <span className="recording-timer" aria-hidden="true">{formatDuration(stt.seconds)}</span>
+                <span className="voice-waveform" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /></span>
               </div>
             ) : (
               <textarea
@@ -82,11 +84,11 @@ export default function ChatInput({ value, onChange, onSubmit, onStop, streaming
           </div>
           <div className="composer-right">
             {recording ? (
-              <button type="button" className="icon-btn mic-btn mic-recording" onClick={stt.stop} aria-label="Stop recording and transcribe" title="Stop recording and transcribe"><Mic size={20} /></button>
+              <button type="button" className="icon-btn mic-btn mic-recording" onClick={stt.stop} aria-label="Stop recording and transcribe" title="Stop recording and transcribe" aria-pressed="true"><Square size={16} fill="currentColor" aria-hidden="true" /></button>
             ) : transcribing ? (
-              <button type="button" className="round-btn" disabled aria-label="Transcribing"><Loader2 size={18} className="spin" /></button>
+              <button type="button" className="icon-btn mic-btn mic-transcribing" disabled aria-label="Transcribing speech" title="Transcribing speech" aria-busy="true"><Loader2 size={19} className="spin" aria-hidden="true" /></button>
             ) : (
-              <button type="button" className="icon-btn mic-btn" onClick={stt.start} disabled={streaming} aria-label="Start voice input" title={stt.supported ? 'Dictate' : 'Voice input is not supported in this browser'}><Mic size={20} /></button>
+              <button type="button" className="icon-btn mic-btn" onClick={stt.start} disabled={streaming} aria-label="Start voice input" title={stt.supported ? 'Dictate' : 'Voice input is not supported in this browser'} aria-pressed="false"><Mic size={20} aria-hidden="true" /></button>
             )}
             {streaming ? (
               <button type="button" className="round-btn" onClick={onStop} aria-label="Stop generating"><Square size={16} /></button>

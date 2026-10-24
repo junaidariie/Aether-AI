@@ -81,7 +81,7 @@ The diagram below is the project's workflow illustration. The current implementa
 - **Frontend:** React 18, Vite, JavaScript, and CSS.
 - **API:** Python 3.11+, FastAPI, and Uvicorn.
 - **Routing and orchestration:** Laya, LangChain, and LangGraph supervisor/agent graphs.
-- **Language models:** ChatGroq; the model is selected from the routing result.
+- **Language models:** Groq, XKIRO (OpenAI-compatible), and Google Gemini; Laya selects a simple or complex pool, then one model is chosen randomly from that pool.
 - **PDF retrieval:** PyMuPDF/PyPDF, Hugging Face sentence-transformer embeddings and reranking, and Pinecone vector storage.
 - **Speech:** Faster-Whisper for speech-to-text and Edge TTS for read-aloud audio.
 - **Deployment:** Docker; the backend Dockerfile is configured for Hugging Face Spaces on port `7860`.
@@ -171,9 +171,11 @@ Set backend credentials as environment variables in a local root `.env` file or 
 
 | Variable | Needed for | Notes |
 |---|---|---|
-| `GROQ_API_KEY` | Chat and agent responses | Required to call ChatGroq models. |
+| `GROQ_API_KEY` | Chat and agent responses | Required for Groq models. |
+| `XKIRO_API_KEY` | Chat and agent responses | Required for XKIRO models. |
+| `GOOGLE_API_KEY` | Chat and agent responses | Required for Gemini models. |
 | `PINECONE_API_KEY` | PDF knowledge-base features | Required by the RAG pipeline. |
-| `GROQ_MODEL` | Default graph initialization | Optional; code defaults to `openai/gpt-oss-20b`. Laya selects the model per chat request. |
+| `GROQ_MODEL` | Default graph initialization | Optional; code defaults to `openai/gpt-oss-20b`. Chat requests select randomly from the configured simple or complex model pool. |
 | `TAVILY_API_KEY` | Tavily web search | Optional; DuckDuckGo search is also available. |
 | `UNSPLASH_ACCESS_KEY` | Unsplash image search | Optional. |
 | `NEWS_API_KEY` | News search | Optional. |
@@ -206,7 +208,7 @@ The root [Dockerfile](Dockerfile) and Space metadata at the top of this README c
 
 1. Create a new Hugging Face Space and choose **Docker** as its SDK.
 2. Upload or push this repository to the Space.
-3. Add required credentials in **Settings → Variables and secrets**. At minimum, configure `GROQ_API_KEY`; add `PINECONE_API_KEY` for PDF retrieval. Add optional provider keys only for the integrations you plan to use.
+3. Add required credentials in **Settings → Variables and secrets**. Configure `GROQ_API_KEY`, `XKIRO_API_KEY`, and `GOOGLE_API_KEY` for random multi-provider chat; add `PINECONE_API_KEY` for PDF retrieval.
 4. Wait for the Space image to build, then check `/health` or open `/docs` on the Space URL.
 5. Update the backend CORS allowlist in `app.py` to include the exact origin of the deployed frontend before connecting a public frontend.
 
